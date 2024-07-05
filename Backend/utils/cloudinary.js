@@ -7,7 +7,6 @@ cloudinary.config({
 const fs = require("fs");
 const uploadCloudinaryImage = async (filePath) => {
 	try {
-		if (!filePath) return null;
 		let result = await cloudinary.uploader.upload(filePath, {
 			use_filename: true,
 			folder: "e-commercial",

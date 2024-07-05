@@ -3,7 +3,6 @@ const asyncWrapper = (cb) => {
 		try {
 			await cb(req, res, next);
 		} catch (error) {
-            //console.log("ERR",error)
 			next(error);
 		}
 	};
