@@ -20,7 +20,6 @@ const addProduct = asyncWrapper(async (req, res, next) => {
 			.status(200)
 			.json({ message: "Sucess fully created", status: 200 });
 	} else {
-		// let a = createCustomError("Please upload image", 401);
 		return next(createCustomError("Please upload image", 401));
 	}
 });

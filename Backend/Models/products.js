@@ -25,6 +25,7 @@ const productSchema = new mongoose.Schema({
 	},
 	discount: {
 		type: Number,
+		default: 10,
 	},
 	category: {
 		type: String,
@@ -44,7 +45,7 @@ const productSchema = new mongoose.Schema({
 		type: Number,
 		default: 117,
 	},
-	imageGallery: [{ type: String }],
+	// imageGallery: [{ type: String }],
 });
 
 const Product = mongoose.model("Product", productSchema);
