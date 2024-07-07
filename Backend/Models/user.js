@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 const addressSchema = new mongoose.Schema({
 	addresline1: { type: String, required: true },
 	addresline2: { type: String, required: true },
@@ -28,5 +29,23 @@ const userSchema = new mongoose.Schema({
 	},
 	address: [addressSchema],
 });
+userSchema.pre("save", async function (next) {
+	try {
+		if (this.isModified("password")) {
+			this.password = await bcrypt.hash(this.password, 10); // 10 is Salt Value
+		}
+		next();
+	} catch (err) {
+		return next(err);
+	}
+});
+userSchema.methods.isPasswordCorrect = async function (userPassword) {
+	try {
+		const match = await bcrypt.compare(userPassword, this.password);
+		return match;
+	} catch (err) {
+		throw err;
+	}
+};
 const User = mongoose.model("User", userSchema);
 module.exports = User;
