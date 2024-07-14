@@ -2,6 +2,10 @@ import { Link } from "react-router-dom";
 import { Button } from "./Button";
 import { Input } from "./Input";
 import { useState } from "react";
+import { validate_phone_number, validateEmail } from "../utils";
+import { createAccount } from "../data/createAccount";
+import { loginUser } from "../data/loginUser";
+
 interface loginSignupProp {
 	heading?: string;
 	requiredFields: Array<string>;
@@ -13,13 +17,80 @@ export const LoginSignup: React.FC<loginSignupProp> = ({
 	heading = "Login",
 	requiredFields,
 	buttonTitle,
-	handleClick,
 }) => {
-	const [formData, setFormData] = useState({});
-	const [formError, setFormError] = useState({});
+	const [formData, setFormData] = useState({
+		email: "",
+		password: "",
+		name: "",
+		number: "",
+	});
+	const [formError, setFormError] = useState({
+		email: "",
+		password: "",
+		name: "",
+		number: "",
+	});
+	let errorCheck = {
+		email: "",
+		password: "",
+		name: "",
+		number: "",
+	};
 	const handleChange = (event: any) => {
 		//console.log(event?.target);
 		setFormData({ ...formData, [event.target.name]: event.target.value });
+		setFormError({ ...formError, [event.target.name]: "" });
+	};
+	const handleSubmit = async (event: any) => {
+		let flag = 0;
+		event.preventDefault();
+		const { email, password, name, number } = formData;
+		if (requiredFields?.length > 2) {
+			if (!email || !validateEmail(email)) {
+				flag = 1;
+				errorCheck = { ...errorCheck, email: "Please Enter Valid Email" };
+			}
+			if (!name) {
+				flag = 1;
+				errorCheck = { ...errorCheck, name: "Please Enter Name" };
+			}
+			if (!number || !validate_phone_number(number)) {
+				flag = 1;
+				errorCheck = { ...errorCheck, number: "Please Enter Phone Number" };
+			}
+			if (!password) {
+				flag = 1;
+				errorCheck = { ...errorCheck, password: "Please Enter Password" };
+			}
+			if (flag) setFormError(errorCheck);
+			else {
+				const signupData = {
+					name: formData?.name,
+					email: formData?.email,
+					mobile: formData?.number,
+					password: formData?.password,
+				};
+				let response = await createAccount(signupData);
+				console.log(response);
+			}
+		} else {
+			if (!email || !validateEmail(email)) {
+				flag = 1;
+				errorCheck = { ...errorCheck, email: "Please Enter Valid Email" };
+			}
+			if (!password) {
+				flag = 1;
+				errorCheck = { ...errorCheck, password: "Please Enter Password" };
+			}
+			if (flag) setFormError(errorCheck);
+			else {
+				const response = await loginUser({
+					email: formData?.email,
+					password: formData?.password,
+				});
+				console.log(response);
+			}
+		}
 	};
 	return (
 		<>
@@ -37,6 +108,7 @@ export const LoginSignup: React.FC<loginSignupProp> = ({
 											handleChange={handleChange}
 											inputName={"email"}
 											key={ind}
+											error={formError["email"]}
 										/>
 									);
 								case "name":
@@ -47,6 +119,7 @@ export const LoginSignup: React.FC<loginSignupProp> = ({
 											handleChange={handleChange}
 											inputName={"name"}
 											key={ind}
+											error={formError["name"]}
 										/>
 									);
 								case "number":
@@ -57,6 +130,7 @@ export const LoginSignup: React.FC<loginSignupProp> = ({
 											handleChange={handleChange}
 											inputName={"number"}
 											key={ind}
+											error={formError["number"]}
 										/>
 									);
 								case "password":
@@ -67,12 +141,13 @@ export const LoginSignup: React.FC<loginSignupProp> = ({
 											handleChange={handleChange}
 											inputName={"password"}
 											key={ind}
+											error={formError["password"]}
 										/>
 									);
 							}
 						})}
 						{/* @ts-ignore */}
-						<Button buttonTitle={buttonTitle} handleClick={handleClick} />
+						<Button buttonTitle={buttonTitle} handleClick={handleSubmit} />
 
 						<p className="text-center text-sm text-gray-500">
 							{requiredFields?.length > 2
