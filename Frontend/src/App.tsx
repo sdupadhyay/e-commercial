@@ -1,39 +1,20 @@
-import { BsBag, BsHeart, BsPerson } from "react-icons/bs";
-
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Navbar } from "./components/Navbar";
+import { Carousel } from "./components/Carousel";
+import { Login } from "./pages/Login";
+import { Signup } from "./pages/Signup";
 function App() {
 	return (
 		<>
-			<header className="flex justify-between items-center shadow-md p-2">
-				<div>
-					<span className="text-primary text-2xl">ELECTRONICES STORE</span>
-				</div>
-				<div className="w-2/4">
-					<input
-						type="search"
-						placeholder="Search for Product and much more"
-						className="p-2 shadow bg-[#f5f5f6] w-full"
-					/>
-				</div>
-				<div>
-					<ul className="flex gap-1 items-center justify-center">
-						<li className="text-2xl relative p-2">
-							<BsHeart />
-							<span className="text-sm text-[#ffff] absolute top-0 right-0 bg-primary rounded-full w-4 flex items-center justify-center">
-								2
-							</span>
-						</li>
-						<li className="text-2xl relative p-2">
-							<BsBag />
-							<span className="text-sm text-[#ffff] absolute top-0 right-0 bg-primary rounded-full w-4 flex items-center justify-center">
-								5
-							</span>
-						</li>
-						<li className="text-3xl p-2">
-							<BsPerson />
-						</li>
-					</ul>
-				</div>
-			</header>
+			<BrowserRouter>
+				<Navbar />
+				<Routes>
+					<Route path="/" element={<Carousel />} />
+					<Route path="/login" element={<Login />} />
+					<Route path="/signup" element={<Signup />} />
+					<Route path="/cart" element={<h1>Cart Page</h1>} />
+				</Routes>
+			</BrowserRouter>
 		</>
 	);
 }
