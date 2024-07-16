@@ -15,3 +15,8 @@ export const validate_phone_number = (mobile_number: string) => {
 	}
 	return false;
 };
+export const isUserAuthenticated = (): boolean => {
+	let userId = sessionStorage.getItem("userId");
+	if (userId) return true;
+	return false;
+};

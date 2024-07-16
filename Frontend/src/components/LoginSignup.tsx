@@ -88,7 +88,10 @@ export const LoginSignup: React.FC<loginSignupProp> = ({
 					email: formData?.email,
 					password: formData?.password,
 				});
-				console.log(response);
+				if (response?.data?.status == 200) {
+					sessionStorage.setItem("userId", response?.data?.userId);
+					setFormData({ email: "", password: "", name: "", number: "" });
+				}
 			}
 		}
 	};
@@ -109,6 +112,7 @@ export const LoginSignup: React.FC<loginSignupProp> = ({
 											inputName={"email"}
 											key={ind}
 											error={formError["email"]}
+											value={formData["email"]}
 										/>
 									);
 								case "name":
@@ -120,6 +124,7 @@ export const LoginSignup: React.FC<loginSignupProp> = ({
 											inputName={"name"}
 											key={ind}
 											error={formError["name"]}
+											value={formData["name"]}
 										/>
 									);
 								case "number":
@@ -131,6 +136,7 @@ export const LoginSignup: React.FC<loginSignupProp> = ({
 											inputName={"number"}
 											key={ind}
 											error={formError["number"]}
+											value={formData["number"]}
 										/>
 									);
 								case "password":
@@ -142,6 +148,7 @@ export const LoginSignup: React.FC<loginSignupProp> = ({
 											inputName={"password"}
 											key={ind}
 											error={formError["password"]}
+											value={formData["password"]}
 										/>
 									);
 							}

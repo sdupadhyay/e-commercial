@@ -5,6 +5,7 @@ interface inputProps {
 	handleChange?: InputChangeHandler;
 	inputName: string;
 	error?: string;
+	value?: string | number;
 }
 export const Input: React.FC<inputProps> = ({
 	inputType = "text",
@@ -12,6 +13,7 @@ export const Input: React.FC<inputProps> = ({
 	handleChange,
 	inputName,
 	error,
+	value,
 }) => {
 	return (
 		<>
@@ -27,6 +29,7 @@ export const Input: React.FC<inputProps> = ({
 						placeholder={placeHolder}
 						onChange={handleChange}
 						name={inputName}
+						value={value}
 					/>
 				</div>
 				{error && <p className="text-red-600 text-sm p-1">{error}</p>}
