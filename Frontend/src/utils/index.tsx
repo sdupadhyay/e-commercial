@@ -15,8 +15,12 @@ export const validate_phone_number = (mobile_number: string) => {
 	}
 	return false;
 };
-export const isUserAuthenticated = (): boolean => {
+export const isUserAuthenticated = (): string | boolean => {
 	let userId = sessionStorage.getItem("userId");
-	if (userId) return true;
+	if (userId) return userId;
 	return false;
+};
+export const calculatePrice = (mrp: number, discount: number) => {
+	let sellingPrice = (mrp * (100 - discount)) / 100;
+	return Math.round(sellingPrice);
 };

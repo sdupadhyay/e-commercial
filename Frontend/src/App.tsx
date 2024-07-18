@@ -5,6 +5,7 @@ import { Login } from "./pages/Login";
 import { Signup } from "./pages/Signup";
 import { PrivateRoute } from "./utils/PrivateRoute";
 import { ProductListing } from "./pages/ProductListing";
+import { ProductDetailPage } from "./pages/ProductDetail";
 function App() {
 	return (
 		<>
@@ -16,6 +17,7 @@ function App() {
 					</Route>
 					<Route path="/" element={<Carousel />} />
 					<Route path="/product" element={<ProductListing />} />
+					<Route path="/product/:productId" element={<ProductDetailPage />} />
 					<Route path="/login" element={<Login />} />
 					<Route path="/signup" element={<Signup />} />
 				</Routes>
