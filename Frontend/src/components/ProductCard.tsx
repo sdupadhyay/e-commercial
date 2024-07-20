@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useContext } from "react";
 import { BsStarFill, BsFillHeartFill } from "react-icons/bs";
-import { getWitlistItem } from "../data/getWitlistItem";
 import { calculatePrice } from "../utils";
 import { Link } from "react-router-dom";
+import { AppContext } from "../context/AppContext";
 type ButtonClickHandler = (event: React.MouseEvent<HTMLButtonElement>) => void;
 interface productCardProps {
 	title: string;
@@ -24,9 +24,9 @@ export const ProductCard: React.FC<productCardProps> = ({
 	review,
 	mrp,
 	_id,
-	handleWitlist,
-	isWitlist,
+	// handleWitlist,
 }) => {
+	const { handleWitlist, witlistItems } = useContext(AppContext);
 	return (
 		<>
 			<div className="p-5 border flex flex-col justify-center items-center gap-2 rounded relative  hover:shadow-lg w-[270px] h-[270px]">
@@ -57,7 +57,9 @@ export const ProductCard: React.FC<productCardProps> = ({
 					// @ts-ignore
 					onClick={() => handleWitlist(_id)}
 				>
-					<BsFillHeartFill color={isWitlist ? "red" : "grey"} />
+					<BsFillHeartFill
+						color={witlistItems?.includes(_id) ? "red" : "grey"}
+					/>
 				</div>
 				{review > 100000 ? (
 					<span className="text-sm bg-[#00A098] p-1 text-white rounded  font-semibold absolute left-2 top-2">

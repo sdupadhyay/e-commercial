@@ -4,16 +4,17 @@ interface productsResponse {
 		data: [
 			{
 				productId: string;
+				quantity: number;
 			}
 		];
 	};
 }
-export const getWitlistItem = async (
+export const getCartItem = async (
 	userId: string
 ): Promise<productsResponse> => {
 	try {
 		let res = await axios.get(
-			`${import.meta.env.VITE_API_BASE_URL}/witlist?userId=${userId}`,
+			`${import.meta.env.VITE_API_BASE_URL}/cart?userId=${userId}`,
 			{
 				responseType: "json",
 			}

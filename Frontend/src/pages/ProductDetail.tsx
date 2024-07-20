@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
-import { BsBagFill, BsStarFill } from "react-icons/bs";
-import { useParams } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { BsArrowRight, BsBagFill, BsStarFill } from "react-icons/bs";
+import { useNavigate, useParams } from "react-router-dom";
 import { getProductDetails } from "../data/getProductDetails";
+import { CartContext } from "../context/CartContext";
 interface Params {
 	productId: string;
 }
@@ -10,11 +11,15 @@ interface details {
 	image: string;
 	description: string;
 	category: string;
+	_id: string;
 }
 export const ProductDetailPage: React.FC = () => {
 	//@ts-ignore
 	const { productId } = useParams<Params>();
 	const [productDetails, setProductDetails] = useState<details>();
+	const { cartItems, handleCart } = useContext(CartContext);
+	//console.log(cartItems);
+	const navigate = useNavigate();
 	useEffect(() => {
 		//@ts-ignore
 		getProductDetails(productId).then((res) =>
@@ -49,10 +54,23 @@ export const ProductDetailPage: React.FC = () => {
 							<p>{productDetails?.description}</p>
 						</div>
 						<div className="flex justify-center lg:justify-start">
-							<button className="bg-primary text-white p-3 flex gap-2 items-center rounded-md">
-								<BsBagFill />
-								Add To Bag
-							</button>
+							{cartItems?.includes(productDetails?._id) ? (
+								<button
+									className="bg-primary text-white p-3 flex gap-2 items-center rounded-md"
+									onClick={() => navigate("/cart")}
+								>
+									Go To Bag
+									<BsArrowRight />
+								</button>
+							) : (
+								<button
+									className="bg-primary text-white p-3 flex gap-2 items-center rounded-md"
+									onClick={() => handleCart(productDetails?._id)}
+								>
+									<BsBagFill />
+									Add To Bag
+								</button>
+							)}
 						</div>
 						<span className="text-lg bg-[#00A098] p-1 text-white rounded  font-semibold absolute right-1 top-1/2 lg:top-1">
 							{productDetails?.category}
