@@ -11,7 +11,7 @@ const userSignUp = asyncWrapper(async (req, res, next) => {
 		.status(200)
 		.json({ message: "User Created Sucessfully", status: 201 });
 });
-const userLogin = asyncWrapper(async (req,res,next) => {
+const userLogin = asyncWrapper(async (req, res, next) => {
 	const { email, password } = req.body;
 	if (!(email || password))
 		return next(createCustomError("All field are required", 400));
@@ -22,6 +22,10 @@ const userLogin = asyncWrapper(async (req,res,next) => {
 	const isPasswordCorrect = await user.isPasswordCorrect(password);
 	if (!isPasswordCorrect)
 		return next(createCustomError("Incorrect Password", 400));
-	return res.status(200).json({ message: "Login Sucessfully", status: 200 });
+	return res.status(200).json({
+		message: "Login Sucessfully",
+		status: 200,
+		userId: user?._id?.toString(),
+	});
 });
 module.exports = { userSignUp, userLogin };
