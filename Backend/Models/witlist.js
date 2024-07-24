@@ -1,13 +1,14 @@
 const mongoose = require("mongoose");
+const { Schema } = require("mongoose");
 const witlistSchema = new mongoose.Schema({
 	userId: {
-		type: Schema.Types.objectId,
+		type: Schema.Types.ObjectId,
 		ref: "User",
 	},
-	ProductId: {
-		type: Schema.Types.objectId,
+	productId: {
+		type: Schema.Types.ObjectId,
 		ref: "Products",
 	},
 });
-const Witlist = mongoose.model("Cart", witlistSchema);
+const Witlist = mongoose.model("witlist", witlistSchema);
 module.exports = Witlist;
