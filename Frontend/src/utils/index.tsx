@@ -24,3 +24,6 @@ export const calculatePrice = (mrp: number, discount: number) => {
 	let sellingPrice = (mrp * (100 - discount)) / 100;
 	return Math.round(sellingPrice);
 };
+export const totalDiscount = (mrp: number, discount: number) => {
+	return Math.round((mrp * discount) / 100);
+};
