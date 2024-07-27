@@ -7,6 +7,7 @@ import { PrivateRoute } from "./utils/PrivateRoute";
 import { ProductListing } from "./pages/ProductListing";
 import { ProductDetailPage } from "./pages/ProductDetail";
 import { CartPage } from "./pages/CartPage";
+import { WitlistPage } from "./pages/WitlistPage";
 function App() {
 	return (
 		<>
@@ -15,6 +16,7 @@ function App() {
 			<Routes>
 				<Route element={<PrivateRoute />}>
 					<Route path="/cart" element={<CartPage />} />
+					<Route path="/witlist" element={<WitlistPage />} />
 				</Route>
 				<Route path="/" element={<Carousel />} />
 				<Route path="/product" element={<ProductListing />} />

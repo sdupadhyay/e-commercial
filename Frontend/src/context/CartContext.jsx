@@ -30,6 +30,10 @@ export const CartContextProvider = ({ children }) => {
 			console.log("Cart Error", error);
 		}
 	};
+	const deleteCart = (productId) => {
+		setCartItems(cartItems?.filter((ele) => ele != productId));
+	};
+
 	useEffect(() => {
 		getCartItem(id).then((res) =>
 			setCartItems(res?.data?.data?.map((ele) => ele?.productId))
@@ -37,7 +41,7 @@ export const CartContextProvider = ({ children }) => {
 	}, []);
 
 	return (
-		<CartContext.Provider value={{ cartItems, handleCart }}>
+		<CartContext.Provider value={{ cartItems, handleCart,deleteCart }}>
 			{children}
 		</CartContext.Provider>
 	);

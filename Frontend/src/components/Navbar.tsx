@@ -22,14 +22,16 @@ export const Navbar = () => {
 				</div>
 				<div>
 					<ul className="flex gap-1 items-center justify-center">
-						<li className="text-2xl relative p-2">
-							<BsHeart />
-							{witlistItems?.length > 0 && (
-								<span className="text-sm text-white absolute top-0 right-0 bg-primary rounded-full w-4 flex items-center justify-center">
-									{witlistItems?.length}
-								</span>
-							)}
-						</li>
+						<Link to={"/witlist"}>
+							<li className="text-2xl relative p-2">
+								<BsHeart />
+								{witlistItems?.length > 0 && (
+									<span className="text-sm text-white absolute top-0 right-0 bg-primary rounded-full w-4 flex items-center justify-center">
+										{witlistItems?.length}
+									</span>
+								)}
+							</li>
+						</Link>
 						<Link to="/cart">
 							<li className="text-2xl relative p-2">
 								<BsBag />

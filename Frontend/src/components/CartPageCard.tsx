@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { BsArrowClockwise } from "react-icons/bs";
+import { BsArrowClockwise, BsXLg } from "react-icons/bs";
+import { ProductPriceDetails } from "./PriceDetails";
 interface cartPageProps {
 	title: string;
 	image: string;
@@ -9,6 +10,7 @@ interface cartPageProps {
 	qty: number;
 	handleINC: Function;
 	handleDNC: Function;
+	handleDelete: Function;
 }
 export const CartPageCard: React.FC<cartPageProps> = ({
 	title,
@@ -17,6 +19,9 @@ export const CartPageCard: React.FC<cartPageProps> = ({
 	qty,
 	handleINC,
 	handleDNC,
+	mrp,
+	discount,
+	handleDelete,
 }) => {
 	const [quantity, setQuantity] = useState(qty);
 	const handleIncrement = () => {
@@ -28,7 +33,7 @@ export const CartPageCard: React.FC<cartPageProps> = ({
 		handleDNC(_id);
 	};
 	return (
-		<div className="flex border p-3 gap-6 rounded-lg">
+		<div className="flex border p-3 gap-6 rounded-lg relative">
 			<div className="w-[100px]">
 				<img src={image} className="w-full" />
 				<div className="flex gap-4 py-3">
@@ -53,17 +58,14 @@ export const CartPageCard: React.FC<cartPageProps> = ({
 				<span className="text-xs text-[#878787]">
 					Sold By: Electronics Store
 				</span>
-				<div className="flex gap-2">
-					<strong className="">₹{Intl.NumberFormat().format(35647)}</strong>
-					<span className="text-[#878787] line-through">
-						₹{Intl.NumberFormat().format(4567)}
-					</span>
-					<span className="text-green-600">{12}% off</span>
-				</div>
+				<ProductPriceDetails mrp={mrp} discount={discount} />
 				<span className="text-xs flex gap-1 items-center">
 					<BsArrowClockwise />
 					<b>10 Days</b> return available
 				</span>
+			</div>
+			<div className="absolute right-3 cursor-pointer" onClick={() => handleDelete(_id)}>
+				<BsXLg />
 			</div>
 		</div>
 	);

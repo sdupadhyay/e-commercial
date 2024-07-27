@@ -15,6 +15,7 @@ interface productCardProps {
 	handleWitlist: ButtonClickHandler;
 	witlistItems?: Array<string>;
 	isWitlist: boolean;
+	removeWitlist: Function;
 }
 export const ProductCard: React.FC<productCardProps> = ({
 	title,
@@ -25,8 +26,15 @@ export const ProductCard: React.FC<productCardProps> = ({
 	mrp,
 	_id,
 	// handleWitlist,
+	removeWitlist,
 }) => {
 	const { handleWitlist, witlistItems } = useContext(AppContext);
+	const witlist = () => {
+		if (removeWitlist) {
+			handleWitlist(_id);
+			removeWitlist(_id);
+		} else handleWitlist(_id);
+	};
 	return (
 		<>
 			<div className="p-5 border flex flex-col justify-center items-center gap-2 rounded relative  hover:shadow-lg w-[270px] h-[270px]">
@@ -55,7 +63,7 @@ export const ProductCard: React.FC<productCardProps> = ({
 				<div
 					className="absolute right-2 top-2 text-lg cursor-pointer"
 					// @ts-ignore
-					onClick={() => handleWitlist(_id)}
+					onClick={witlist}
 				>
 					<BsFillHeartFill
 						color={witlistItems?.includes(_id) ? "red" : "grey"}
