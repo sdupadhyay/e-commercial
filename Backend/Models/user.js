@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const addressSchema = new mongoose.Schema({
-	addresline1: { type: String, required: true },
-	addresline2: { type: String, required: true },
+	name: { type: String, require: true },
+	number: { type: Number, require: true },
+	address: { type: String, require: true },
 	city: { type: String, required: true },
 	state: { type: String, required: true },
 	pincode: { type: Number, required: true },

@@ -28,4 +28,20 @@ const userLogin = asyncWrapper(async (req, res, next) => {
 		userId: user?._id?.toString(),
 	});
 });
-module.exports = { userSignUp, userLogin };
+const addUserAddress = asyncWrapper(async (req, res, next) => {
+	const { userId } = req?.query;
+	if (!userId) return next(createCustomError("User Id not Found", 400));
+	const userdData = await User.findById(userId);
+	userdData.address.push(req.body);
+	await userdData.save();
+	return res
+		.status(200)
+		.json({ message: "Address Sucessfully Added", status: 201 });
+});
+const getUserAddress = asyncWrapper(async (req, res, next) => {
+	const { userId } = req?.query;
+	if (!userId) return next(createCustomError("User Id not Found", 400));
+	const userData = await User.findById(userId);
+	return res.status(200).json({ data: userData?.address, status: 200 });
+});
+module.exports = { userSignUp, userLogin, addUserAddress, getUserAddress };
