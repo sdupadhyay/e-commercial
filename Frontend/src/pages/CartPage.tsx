@@ -7,6 +7,7 @@ import { isUserAuthenticated } from "../utils";
 import { deleteCartItem } from "../data/cart/deleteCartItem";
 import { CartContext } from "../context/CartContext";
 import { BsPlusLg } from "react-icons/bs";
+import { UseNotification } from "../hooks/UseNotification";
 
 export const CartPage = () => {
 	interface cartProp {
@@ -18,6 +19,7 @@ export const CartPage = () => {
 	const [cartData, setCartData] = useState<cartProp[]>([]);
 	const { deleteCart } = useContext(CartContext);
 	let userId = isUserAuthenticated();
+	const { notificationComponent, triggerNotification } = UseNotification();
 
 	const handleINC = (id: string) => {
 		//@ts-ignore
@@ -36,7 +38,8 @@ export const CartPage = () => {
 			)
 		);
 	};
-	const handleDelete = (productId: string) => {
+	const handleDelete = (productId: string, title: string) => {
+		triggerNotification({ message: `${title} Removed from Cart` });
 		//@ts-ignore
 		deleteCartItem(userId, productId).then((res) => console.log(res));
 		setCartData(cartData?.filter((ele) => ele?._id != productId));
@@ -113,6 +116,7 @@ export const CartPage = () => {
 					<p className="text-center mt-9 ">Your Cart is Empty</p>
 				</div>
 			)}
+			{notificationComponent}
 		</>
 	);
 };

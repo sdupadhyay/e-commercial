@@ -3,6 +3,7 @@ import { BsArrowRight, BsBagFill, BsStarFill } from "react-icons/bs";
 import { useNavigate, useParams } from "react-router-dom";
 import { getProductDetails } from "../data/getProductDetails";
 import { CartContext } from "../context/CartContext";
+import { UseNotification } from "../hooks/UseNotification";
 interface Params {
 	productId: string;
 }
@@ -18,6 +19,7 @@ export const ProductDetailPage: React.FC = () => {
 	const { productId } = useParams<Params>();
 	const [productDetails, setProductDetails] = useState<details>();
 	const { cartItems, handleCart } = useContext(CartContext);
+	const { notificationComponent, triggerNotification } = UseNotification();
 	//console.log(cartItems);
 	const navigate = useNavigate();
 	useEffect(() => {
@@ -27,6 +29,10 @@ export const ProductDetailPage: React.FC = () => {
 			setProductDetails(res.data.data[0])
 		);
 	}, []);
+	const addToBag = () => {
+		triggerNotification({ message: `${productDetails?.title} Added to Cart` });
+		handleCart(productDetails?._id);
+	};
 	return (
 		<>
 			<div className="flex flex-col justify-center items-center h-[500px] mt-[140px] lg:my-12">
@@ -65,7 +71,7 @@ export const ProductDetailPage: React.FC = () => {
 							) : (
 								<button
 									className="bg-primary text-white p-3 flex gap-2 items-center rounded-md"
-									onClick={() => handleCart(productDetails?._id)}
+									onClick={addToBag}
 								>
 									<BsBagFill />
 									Add To Bag
@@ -78,6 +84,7 @@ export const ProductDetailPage: React.FC = () => {
 					</div>
 				</div>
 			</div>
+			{notificationComponent}
 		</>
 	);
 };

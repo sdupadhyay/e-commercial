@@ -1,7 +1,8 @@
 import { LoginSignup } from "../components/LoginSignup";
+import { UseNotification } from "../hooks/UseNotification";
 
 export const Login = () => {
-    
+	const { notificationComponent } = UseNotification();
 	return (
 		<>
 			<LoginSignup
@@ -10,6 +11,7 @@ export const Login = () => {
 				requiredFields={["email", "password"]}
 				buttonTitle="Login"
 			/>
+			{notificationComponent}
 		</>
 	);
 };
