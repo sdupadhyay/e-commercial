@@ -64,7 +64,7 @@ export const CartPageCard: React.FC<cartPageProps> = ({
 					<b>10 Days</b> return available
 				</span>
 			</div>
-			<div className="absolute right-3 cursor-pointer" onClick={() => handleDelete(_id)}>
+			<div className="absolute right-3 cursor-pointer" onClick={() => handleDelete(_id,title)}>
 				<BsXLg />
 			</div>
 		</div>

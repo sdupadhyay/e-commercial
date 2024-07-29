@@ -20,7 +20,6 @@ export const CartContextProvider = ({ children }) => {
 				} else {
 					const response = await addToCart(id, productId);
 					setCartItems([...cartItems, productId]);
-					if (response?.data?.status == 201) alert(response?.data?.message);
 				}
 			} else {
 				console.log("Triggered");
@@ -35,13 +34,14 @@ export const CartContextProvider = ({ children }) => {
 	};
 
 	useEffect(() => {
-		getCartItem(id).then((res) =>
-			setCartItems(res?.data?.data?.map((ele) => ele?.productId))
-		);
+		if (id)
+			getCartItem(id).then((res) =>
+				setCartItems(res?.data?.data?.map((ele) => ele?.productId))
+			);
 	}, []);
 
 	return (
-		<CartContext.Provider value={{ cartItems, handleCart,deleteCart }}>
+		<CartContext.Provider value={{ cartItems, handleCart, deleteCart }}>
 			{children}
 		</CartContext.Provider>
 	);

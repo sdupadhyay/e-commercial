@@ -14,6 +14,7 @@ export const WitlistPage = () => {
 	const userId = isUserAuthenticated();
 	const [witlistData, setWitlistData] = useState<details>();
 	const removeWitlist = (id: string) => {
+		//@ts-ignore
 		setWitlistData(witlistData?.filter((ele) => ele?._id != id));
 	};
 	useEffect(() => {

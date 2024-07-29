@@ -1,10 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "./Button";
 import { Input } from "./Input";
 import { useState } from "react";
 import { validate_phone_number, validateEmail } from "../utils";
 import { createAccount } from "../data/createAccount";
 import { loginUser } from "../data/loginUser";
+import { UseNotification } from "../hooks/UseNotification";
 
 interface loginSignupProp {
 	heading?: string;
@@ -36,6 +37,8 @@ export const LoginSignup: React.FC<loginSignupProp> = ({
 		name: "",
 		number: "",
 	};
+	const navigate = useNavigate()
+	const { notificationComponent, triggerNotification } = UseNotification();
 	const handleChange = (event: any) => {
 		//console.log(event?.target);
 		setFormData({ ...formData, [event.target.name]: event.target.value });
@@ -90,7 +93,10 @@ export const LoginSignup: React.FC<loginSignupProp> = ({
 				});
 				if (response?.data?.status == 200) {
 					sessionStorage.setItem("userId", response?.data?.userId);
+					triggerNotification({ message: "Login Sucess" });
+					//console.log(response.data);
 					setFormData({ email: "", password: "", name: "", number: "" });
+					navigate("/")
 				}
 			}
 		}
@@ -170,6 +176,7 @@ export const LoginSignup: React.FC<loginSignupProp> = ({
 					</form>
 				</div>
 			</div>
+			{notificationComponent}
 		</>
 	);
 };

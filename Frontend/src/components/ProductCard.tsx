@@ -16,6 +16,7 @@ interface productCardProps {
 	witlistItems?: Array<string>;
 	isWitlist: boolean;
 	removeWitlist: Function;
+	triggerNotification : Function;
 }
 export const ProductCard: React.FC<productCardProps> = ({
 	title,
@@ -27,9 +28,11 @@ export const ProductCard: React.FC<productCardProps> = ({
 	_id,
 	// handleWitlist,
 	removeWitlist,
+	triggerNotification,
 }) => {
 	const { handleWitlist, witlistItems } = useContext(AppContext);
 	const witlist = () => {
+		triggerNotification({message:"Added to Witlist"})
 		if (removeWitlist) {
 			handleWitlist(_id);
 			removeWitlist(_id);
