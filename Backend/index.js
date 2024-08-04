@@ -10,6 +10,7 @@ const userAuthenticationRoute = require("./routes/userRoutes");
 const cartRoutes = require("./routes/cartRoutes");
 const witlistRoute = require("./routes/witlistRoutes");
 const paymentRoute = require("./routes/paymentRoutes");
+const orderRoute = require("./routes/orderRoutes");
 app.use(express.json());
 app.use(fileUpload({ useTempFiles: true }));
 const corsOptions = {
@@ -25,6 +26,7 @@ app.use("/api/v1/user", userAuthenticationRoute);
 app.use("/api/v1/cart", cartRoutes);
 app.use("/api/v1/witlist", witlistRoute);
 app.use("/api/v1/payment", paymentRoute);
+app.use("/api/v1/order", orderRoute);
 app.use(errorHandlerMiddleware);
 db();
 app.listen(PORT, () => {
