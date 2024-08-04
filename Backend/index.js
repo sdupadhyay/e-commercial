@@ -8,7 +8,8 @@ const fileUpload = require("express-fileupload");
 const productRoutes = require("./routes/productRoutes");
 const userAuthenticationRoute = require("./routes/userRoutes");
 const cartRoutes = require("./routes/cartRoutes");
-const witlistRoute = require("./routes/witlistRoutes")
+const witlistRoute = require("./routes/witlistRoutes");
+const paymentRoute = require("./routes/paymentRoutes");
 app.use(express.json());
 app.use(fileUpload({ useTempFiles: true }));
 const corsOptions = {
@@ -23,6 +24,7 @@ app.use("/api/v1/product", productRoutes);
 app.use("/api/v1/user", userAuthenticationRoute);
 app.use("/api/v1/cart", cartRoutes);
 app.use("/api/v1/witlist", witlistRoute);
+app.use("/api/v1/payment", paymentRoute);
 app.use(errorHandlerMiddleware);
 db();
 app.listen(PORT, () => {
