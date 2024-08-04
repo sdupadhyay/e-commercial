@@ -4,7 +4,27 @@ const asyncWrapper = require("../middleware/async");
 const uploadCloudinaryImage = require("../utils/cloudinary");
 
 const getProduct = asyncWrapper(async (req, res, next) => {
-	let productList = await Product.find({}).select(
+	const { category, company, rating, discount, minPrice, maxPrice } =
+		req?.query;
+	const filter = {};
+	if (category) {
+		const categories = category.split(",");
+		filter.category = { $in: categories };
+	}
+	if (company) {
+		const companies = company?.split(",");
+		filter.company = companies;
+	}
+	if (rating) {
+		filter.rating = { $gte: rating };
+	}
+	if (discount) {
+		filter.discount = { $gte: discount };
+	}
+	if (minPrice && maxPrice) {
+		filter.mrp = { $gte: minPrice, $lte: maxPrice };
+	}
+	let productList = await Product.find(filter).select(
 		"-description -category -compnay"
 	);
 	//console.log(productList);
