@@ -9,20 +9,29 @@ const productSchema = new mongoose.Schema({
 		default: 1,
 	},
 });
-const orderSchema = new mongoose.Schema({
-	orderId: {
-		type: String,
-		require: true,
+const orderSchema = new mongoose.Schema(
+	{
+		orderId: {
+			type: String,
+			require: true,
+		},
+		paymentId: {
+			type: String,
+			require: true,
+		},
+		transactionAmount: {
+			type: Number,
+			require: true,
+		},
+		userId: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "User",
+		},
+		productList: [productSchema],
 	},
-	paymentId: {
-		type: String,
-		require: true,
-	},
-	userId: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: "User",
-	},
-	productList: [productSchema],
-});
+	{
+		timestamps: true,
+	}
+);
 const Order = mongoose.model("Order", orderSchema);
 module.exports = Order;
